@@ -3,11 +3,11 @@ package com.LIVTech.tasks.domain.mapper.impl;
 import com.LIVTech.tasks.domain.dto.TaskDto;
 import com.LIVTech.tasks.domain.entities.Task;
 import com.LIVTech.tasks.domain.mapper.TaskMapper;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-import static java.time.LocalTime.now;
-
+@Component
 public  class TaskMapperImpl implements TaskMapper {
 
     @Override
@@ -25,7 +25,7 @@ public  class TaskMapperImpl implements TaskMapper {
 
     @Override
     public Task taskDtoToTask(TaskDto taskDto) {
-        LocalDateTime now = LocalDateTime.now();
+       // LocalDateTime now = LocalDateTime.now();
         return new Task(
                         taskDto.id(),
                         taskDto.title(),
@@ -34,8 +34,8 @@ public  class TaskMapperImpl implements TaskMapper {
                 taskDto.status(),
                 taskDto.priority(),
                         null, // taskList
-                        now,  // created
-                        now   // updated
+                        null,  // created
+                        null   // updated
                 );
     }
 }

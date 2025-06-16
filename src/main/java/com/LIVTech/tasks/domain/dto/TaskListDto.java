@@ -10,9 +10,10 @@ public record TaskListDto(
     Long id,
     String title,
     String description,
+    List<TaskDto> task,
     Integer count,
     Double progress,
-    LocalDateTime dueDate,
-    List<TaskDto> task
+    LocalDateTime dueDate
+
 ) {
 }
