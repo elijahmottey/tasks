@@ -6,7 +6,6 @@ import com.LIVTech.tasks.domain.entities.TaskList;
 import com.LIVTech.tasks.domain.entities.TaskStatus;
 import com.LIVTech.tasks.domain.mapper.TaskListMapper;
 import com.LIVTech.tasks.domain.mapper.TaskMapper;
-import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +39,7 @@ public class TaskListMapperImpl implements TaskListMapper {
                         .map(List::size)
                         .orElse(0),
                 calculateProgress(taskList.getTasks()),
-                null  // dueDate parameter
+                null
         );
     }
 
