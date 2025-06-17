@@ -1,6 +1,8 @@
 package com.LIVTech.tasks.domain.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,8 @@ public class TaskList {
     private Long id;
 
     @Column(name = "title", nullable = false)
+    @NotNull(message = "Title cannot be null")
+    @Size(min = 2,  message = "Title must be 2 or above characters")
     private String title;
 
     @Column(name = "decription")
