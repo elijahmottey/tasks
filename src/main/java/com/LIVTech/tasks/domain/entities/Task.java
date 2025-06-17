@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Task  {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "taskId",updatable = false,nullable = false)
+    @Column(name = "taskId",nullable = false)
     private Long taskId;
 
     @Column(name = "title", nullable = false)
@@ -29,7 +29,7 @@ public class Task  {
     @Column(name = "due_date")
     private LocalDateTime dueDate;
 
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     @Column(name = "status" , nullable = false)
     private TaskStatus status;
 

@@ -30,10 +30,3 @@ spring:
 server:
   port: 9099
 
-# Debug settings (optional, remove in production)
-logging:
-  level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    com.zaxxer.hikari.HikariConfig: DEBUG
-    com.zaxxer.hikari: TRACE

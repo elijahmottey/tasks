@@ -16,7 +16,7 @@ import java.util.List;
 public class TaskList {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "title", nullable = false)
