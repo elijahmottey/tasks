@@ -5,6 +5,7 @@ import com.LIVTech.tasks.domain.dto.TaskListDto;
 import com.LIVTech.tasks.domain.entities.TaskList;
 import com.LIVTech.tasks.domain.mapper.TaskListMapper;
 import com.LIVTech.tasks.service.TaskListService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +39,17 @@ public class TaskListController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TaskListDto> createTaskList(@RequestBody TaskListDto taskListDto) {
+    public ResponseEntity<TaskListDto> createTaskList( @RequestBody @Valid TaskListDto taskListDto) {
         TaskList createTaskList =taskListService.createTaskList(taskListMapper.taskListToTaskListDto(taskListDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(taskListMapper.taskListDtoToTaskList(createTaskList));
 
     }
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<TaskListDto> getTaskList(@PathVariable("taskId") Long taskId) {
+        TaskList taskList = taskListService.getTaskListById(taskId);
+        return ResponseEntity.ok(taskListMapper.taskListDtoToTaskList(taskList));
+    }
+
+
 }

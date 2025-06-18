@@ -2,7 +2,7 @@ package com.LIVTech.tasks.domain.entities;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,11 +19,11 @@ import java.time.LocalDateTime;
 public class Task  {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "taskId",nullable = false)
+    @Column(name = "task_id",nullable = false)
     private Long taskId;
 
     @Column(name = "title", nullable = false)
-    @NotNull(message = "Title cannot be null")
+    @NotBlank(message = "Title cannot be null")
     @Size(min = 2, message = "Title must be 2 or above characters")
     private String title;
 
@@ -41,7 +41,7 @@ public class Task  {
     private  TaskPriority priority;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "task_list-id")
+    @JoinColumn(name = "task_list_id")
     private  TaskList taskList;
 
     @Column(name = "created", nullable = false)

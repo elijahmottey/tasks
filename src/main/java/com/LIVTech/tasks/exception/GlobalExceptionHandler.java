@@ -71,5 +71,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(
+            NotFoundException ex, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
 
 }

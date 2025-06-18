@@ -1,7 +1,7 @@
 package com.LIVTech.tasks.service.impl;
 
-import com.LIVTech.tasks.domain.dto.TaskListDto;
 import com.LIVTech.tasks.domain.entities.TaskList;
+import com.LIVTech.tasks.exception.NotFoundException;
 import com.LIVTech.tasks.repository.TaskListRepository;
 import com.LIVTech.tasks.service.TaskListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 
 @Service
 public class TaskListServiceImpl implements TaskListService {
@@ -36,4 +37,15 @@ public class TaskListServiceImpl implements TaskListService {
        return taskListRepository.save(taskList);
 
     }
+
+    @Override
+    public TaskList getTaskListById(Long id) {
+       if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid task list ID: " + id);
+        }
+        return taskListRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Task list not found with id: " + id));
+    }
+
+
 }
