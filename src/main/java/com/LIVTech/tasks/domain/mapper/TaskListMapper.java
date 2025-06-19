@@ -4,6 +4,8 @@ import com.LIVTech.tasks.domain.dto.TaskListDto;
 import com.LIVTech.tasks.domain.entities.TaskList;
 
 public interface TaskListMapper {
-    TaskListDto taskListDtoToTaskList(TaskList taskList);
-    TaskList taskListToTaskListDto(TaskListDto taskListDto);
+    //from entity to dto
+    TaskListDto taskListToTaskListDto(TaskList taskList);
+    // from dto to entity
+    TaskList taskListDtoToTaskList(TaskListDto taskListDto);
 }

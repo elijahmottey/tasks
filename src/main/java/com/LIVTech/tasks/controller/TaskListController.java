@@ -33,22 +33,22 @@ public class TaskListController {
         return ResponseEntity.ok(
                 taskListService.listTaskLists()
                         .stream()
-                        .map(taskListMapper::taskListDtoToTaskList)
+                        .map(taskListMapper::taskListToTaskListDto)
                         .toList());
 
     }
 
     @PostMapping("/create")
     public ResponseEntity<TaskListDto> createTaskList( @RequestBody @Valid TaskListDto taskListDto) {
-        TaskList createTaskList =taskListService.createTaskList(taskListMapper.taskListToTaskListDto(taskListDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskListMapper.taskListDtoToTaskList(createTaskList));
+        TaskList createTaskList =taskListService.createTaskList(taskListMapper.taskListDtoToTaskList(taskListDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskListMapper.taskListToTaskListDto(createTaskList));
 
     }
 
     @GetMapping("/{taskId}")
     public ResponseEntity<TaskListDto> getTaskList(@PathVariable("taskId") Long taskId) {
         TaskList taskList = taskListService.getTaskListById(taskId);
-        return ResponseEntity.ok(taskListMapper.taskListDtoToTaskList(taskList));
+        return ResponseEntity.ok(taskListMapper.taskListToTaskListDto(taskList));
     }
 
 

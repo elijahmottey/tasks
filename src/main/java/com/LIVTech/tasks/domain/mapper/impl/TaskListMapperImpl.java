@@ -25,7 +25,7 @@ public class TaskListMapperImpl implements TaskListMapper {
 
 
     @Override
-    public TaskListDto taskListDtoToTaskList(TaskList taskList) {
+    public TaskListDto taskListToTaskListDto(TaskList taskList) {
         return new TaskListDto(
                 taskList.getId(),
                 taskList.getTitle(),
@@ -44,7 +44,7 @@ public class TaskListMapperImpl implements TaskListMapper {
     }
 
     @Override
-    public TaskList taskListToTaskListDto(TaskListDto taskListDto) {
+    public TaskList taskListDtoToTaskList(TaskListDto taskListDto) {
         LocalDateTime now = LocalDateTime.now();
         return new TaskList(
                 taskListDto.id(),
