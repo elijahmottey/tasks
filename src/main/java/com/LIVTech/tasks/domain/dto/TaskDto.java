@@ -1,7 +1,7 @@
 package com.LIVTech.tasks.domain.dto;
 
-import com.LIVTech.tasks.domain.entities.TaskPriority;
-import com.LIVTech.tasks.domain.entities.TaskStatus;
+import com.LIVTech.tasks.domain.enums.TaskPriority;
+import com.LIVTech.tasks.domain.enums.TaskStatus;
 
 import java.time.LocalDateTime;
 

@@ -1,7 +1,8 @@
 package com.LIVTech.tasks.controller;
 
 
-import com.LIVTech.tasks.domain.dto.TaskListDto;
+import com.LIVTech.tasks.domain.dto.response.TaskListDto;
+import com.LIVTech.tasks.domain.dto.response.ApiResponse;
 import com.LIVTech.tasks.domain.entities.TaskList;
 import com.LIVTech.tasks.domain.mapper.TaskListMapper;
 import com.LIVTech.tasks.service.TaskListService;
@@ -29,26 +30,28 @@ public class TaskListController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<List<TaskListDto>> listTaskLists() {
-        return ResponseEntity.ok(
-                taskListService.listTaskLists()
+    public ResponseEntity<ApiResponse<List<TaskListDto>>> listTaskLists() {
+
+             List<TaskListDto> tasks =  taskListService.listTaskLists()
                         .stream()
                         .map(taskListMapper::taskListToTaskListDto)
-                        .toList());
+                        .toList();
+             return ResponseEntity.ok(new ApiResponse<>(tasks, "Task lists retrieved successfully"));
 
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TaskListDto> createTaskList( @RequestBody @Valid TaskListDto taskListDto) {
+    public ResponseEntity<ApiResponse<TaskListDto>>createTaskList( @RequestBody @Valid TaskListDto taskListDto) {
         TaskList createTaskList =taskListService.createTaskList(taskListMapper.taskListDtoToTaskList(taskListDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskListMapper.taskListToTaskListDto(createTaskList));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(taskListMapper.taskListToTaskListDto(createTaskList),
+                "Task list created successfully"));
 
     }
 
     @GetMapping("/{taskId}")
-    public ResponseEntity<TaskListDto> getTaskList(@PathVariable("taskId") Long taskId) {
+    public ResponseEntity<ApiResponse<TaskListDto>> getTaskList(@PathVariable("taskId") Long taskId) {
         TaskList taskList = taskListService.getTaskListById(taskId);
-        return ResponseEntity.ok(taskListMapper.taskListToTaskListDto(taskList));
+        return ResponseEntity.ok(new ApiResponse<>(taskListMapper.taskListToTaskListDto(taskList),"Task with "+taskId+" retrieved successfully"));
     }
 
 

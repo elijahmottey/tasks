@@ -1,9 +1,9 @@
 package com.LIVTech.tasks.domain.mapper.impl;
 
-import com.LIVTech.tasks.domain.dto.TaskListDto;
+import com.LIVTech.tasks.domain.dto.response.TaskListDto;
 import com.LIVTech.tasks.domain.entities.Task;
 import com.LIVTech.tasks.domain.entities.TaskList;
-import com.LIVTech.tasks.domain.entities.TaskStatus;
+import com.LIVTech.tasks.domain.enums.TaskStatus;
 import com.LIVTech.tasks.domain.mapper.TaskListMapper;
 import com.LIVTech.tasks.domain.mapper.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.LIVTech.tasks.domain.entities;
+package com.LIVTech.tasks.domain.enums;
 
 public enum TaskPriority {
     HIGH,MEDIUM,LOW

@@ -1,6 +1,8 @@
 package com.LIVTech.tasks.domain.entities;
 
 
+import com.LIVTech.tasks.domain.enums.TaskPriority;
+import com.LIVTech.tasks.domain.enums.TaskStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -38,7 +40,7 @@ public class Task  {
     private TaskStatus status;
 
     @Column(name = "priority", nullable = false)
-    private  TaskPriority priority;
+    private TaskPriority priority;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_list_id")
