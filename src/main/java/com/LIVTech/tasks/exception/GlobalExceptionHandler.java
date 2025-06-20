@@ -65,10 +65,13 @@ public class GlobalExceptionHandler {
      */
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String,String>> handleException(Exception ex,WebRequest request){
-        Map<String,String> errors = new HashMap<>();
-        errors.put("Message","A unexpected error occurred" + ex.getMessage());
-        return new ResponseEntity<>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<ErrorResponse> handleException(Exception ex,WebRequest request){
+        ErrorResponse errorResponse =  new ErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "An unexpected error occurred: " + ex.getMessage(),
+                request.getDescription(false)
+        );
+        return new ResponseEntity<>(errorResponse,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(NotFoundException.class)

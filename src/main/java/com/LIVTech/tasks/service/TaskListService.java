@@ -12,5 +12,6 @@ public interface TaskListService {
     List<TaskList> listTaskLists();
     TaskList createTaskList(TaskList taskList);
     TaskList getTaskListById(Long id);
+    TaskList updateTaskList(Long id, TaskList taskList);
 
 }

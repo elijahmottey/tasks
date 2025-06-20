@@ -9,21 +9,54 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+
+/**
+ * Implementation of the TaskListService interface that provides operations for managing task lists.
+ * This service handles CRUD operations for TaskList entities using Spring Data JPA.
+ * @author Elijah
+ */
+
 
 
 @Service
 public class TaskListServiceImpl implements TaskListService {
     private final TaskListRepository taskListRepository;
 
-   @Autowired
+
+    /**
+     * Constructs a new TaskListServiceImpl with the required repository.
+     *
+     * @param taskListRepository The repository for TaskList entities
+     */
+
+
+    @Autowired
     public TaskListServiceImpl(TaskListRepository taskListRepository) {
         this.taskListRepository = taskListRepository;
     }
+
+
+    /**
+     * Retrieves all task lists from the database.
+     *
+     * @return List of all TaskList entities
+     */
 
     @Override
     public List<TaskList> listTaskLists() {
         return taskListRepository.findAll();
     }
+
+
+    /**
+     * Creates a new task list in the database.
+     *
+     * @param taskList The TaskList entity to be created
+     * @return The saved TaskList entity with generated ID and timestamps
+     * @throws IllegalArgumentException if the task list already has an ID or if the title is null or empty
+     */
+
 
     @Override
     public TaskList createTaskList(TaskList taskList) {
@@ -38,6 +71,16 @@ public class TaskListServiceImpl implements TaskListService {
 
     }
 
+    /**
+     * Retrieves a task list by its ID.
+     *
+     * @param id The ID of the task list to retrieve
+     * @return The TaskList entity if found
+     * @throws IllegalArgumentException if the provided ID is null or less than or equal to 0
+     * @throws NotFoundException if no task list is found with the given ID
+     */
+
+
     @Override
     public TaskList getTaskListById(Long id) {
        if (id == null || id <= 0) {
@@ -45,6 +88,24 @@ public class TaskListServiceImpl implements TaskListService {
         }
         return taskListRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Task list not found with id: " + id));
+    }
+
+    @Override
+    public TaskList updateTaskList(Long id, TaskList taskList) {
+        if ( taskList.getId() == null || id <= 0)
+            throw new IllegalArgumentException("Invalid task list ID: " + id);
+        if(!Objects.equals(taskList.getId(),id))
+            throw new IllegalArgumentException("Task list ID in the request does not match the provided ID");
+       TaskList existingTaskList = taskListRepository.findById(id).orElseThrow(()->
+                new NotFoundException("Task list not found with id: " + id));
+        existingTaskList.setTitle(taskList.getTitle());
+
+        existingTaskList.setDescription(taskList.getDescription());
+        existingTaskList.setTasks(taskList.getTasks());
+        existingTaskList.setUpdated(LocalDateTime.now());
+        return taskListRepository.save(existingTaskList);
+
+
     }
 
 
