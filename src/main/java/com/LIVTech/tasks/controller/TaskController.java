@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/task-list/{listId}")
@@ -40,6 +41,18 @@ public class TaskController {
         Task  createdTasks = this.taskService.createTask(listId,taskMapper.taskDtoToTask(taskDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(this.taskMapper.taskToTaskDto(createdTasks),"Task created successfully"));
     }
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<ApiResponse<Optional<TaskDto>>> getTask(
+            @PathVariable("taskId") Long taskId,
+            @PathVariable("listId") Long listId
+    ) {
+        return new ResponseEntity<>(new ApiResponse<>(this.taskService.getTask(listId,taskId)
+                .map(taskMapper::taskToTaskDto),
+                "Task retrieved successfully"), HttpStatus.OK);
+    }
+
+
 
 
 }
