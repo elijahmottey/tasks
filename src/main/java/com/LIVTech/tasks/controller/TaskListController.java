@@ -42,8 +42,8 @@ public class TaskListController {
 
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<TaskListDto>>createTaskList( @RequestBody @Valid TaskListDto taskListDto) {
-        TaskList createTaskList =taskListService.createTaskList(taskListMapper.taskListDtoToTaskList(taskListDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(taskListMapper.taskListToTaskListDto(createTaskList),
+        TaskList createTaskList =this.taskListService.createTaskList(this.taskListMapper.taskListDtoToTaskList(taskListDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(this.taskListMapper.taskListToTaskListDto(createTaskList),
                 "Task list created successfully"));
 
     }
@@ -52,6 +52,23 @@ public class TaskListController {
     public ResponseEntity<ApiResponse<TaskListDto>> getTaskList(@PathVariable("taskId") Long taskId) {
         TaskList taskList = taskListService.getTaskListById(taskId);
         return ResponseEntity.ok(new ApiResponse<>(taskListMapper.taskListToTaskListDto(taskList),"Task with "+taskId+" retrieved successfully"));
+    }
+
+    @PutMapping("/{taskId}/update")
+    public  ResponseEntity<ApiResponse<TaskListDto>> updateTaskList(
+            @PathVariable("taskId") Long taskId,
+            @RequestBody @Valid TaskListDto taskListDto) {
+
+        TaskList updatedTaskList = taskListService
+                .updateTaskList(taskId, taskListMapper.taskListDtoToTaskList(taskListDto));
+        return ResponseEntity.ok(new ApiResponse<>(taskListMapper.taskListToTaskListDto(updatedTaskList),
+                "Task list with ID " + taskId + " updated successfully"));
+    }
+
+    @DeleteMapping("/{taskId}/delete")
+    public void deleteTaskList(@PathVariable("taskId") Long taskId) {
+        this.taskListService.deleteTaskList(taskId);
+        ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

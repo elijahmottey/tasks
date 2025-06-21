@@ -4,6 +4,7 @@ import com.LIVTech.tasks.domain.entities.TaskList;
 import com.LIVTech.tasks.exception.NotFoundException;
 import com.LIVTech.tasks.repository.TaskListRepository;
 import com.LIVTech.tasks.service.TaskListService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +68,7 @@ public class TaskListServiceImpl implements TaskListService {
         LocalDateTime now = LocalDateTime.now();
         taskList.setCreated(now);
         taskList.setUpdated(now);
-       return taskListRepository.save(taskList);
+       return this.taskListRepository.save(taskList);
 
     }
 
@@ -86,24 +87,32 @@ public class TaskListServiceImpl implements TaskListService {
        if (id == null || id <= 0) {
             throw new IllegalArgumentException("Invalid task list ID: " + id);
         }
-        return taskListRepository.findById(id)
+        return this.taskListRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Task list not found with id: " + id));
     }
 
     @Override
+    @Transactional
     public TaskList updateTaskList(Long id, TaskList taskList) {
-        if ( taskList.getId() == null || id <= 0)
-            throw new IllegalArgumentException("Invalid task list ID: " + id);
+
         if(!Objects.equals(taskList.getId(),id))
             throw new IllegalArgumentException("Task list ID in the request does not match the provided ID");
-       TaskList existingTaskList = taskListRepository.findById(id).orElseThrow(()->
-                new NotFoundException("Task list not found with id: " + id));
-        existingTaskList.setTitle(taskList.getTitle());
 
+       TaskList existingTaskList = this.getTaskListById(id);
+
+        existingTaskList.setTitle(taskList.getTitle());
         existingTaskList.setDescription(taskList.getDescription());
         existingTaskList.setTasks(taskList.getTasks());
         existingTaskList.setUpdated(LocalDateTime.now());
-        return taskListRepository.save(existingTaskList);
+        return this.taskListRepository.save(existingTaskList);
+
+
+    }
+
+    @Override
+    @Transactional
+    public void deleteTaskList(Long id) {
+        this.taskListRepository.deleteById(id);
 
 
     }
