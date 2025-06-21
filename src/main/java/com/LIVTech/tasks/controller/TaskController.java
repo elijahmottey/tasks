@@ -52,7 +52,19 @@ public class TaskController {
                 "Task retrieved successfully"), HttpStatus.OK);
     }
 
+    @PutMapping("/update/{taskId}")
+    public ResponseEntity<ApiResponse<TaskDto>> updateTask(
+            @PathVariable("listId") Long listId,
+            @PathVariable("taskId") Long taskId,
+            @RequestBody @Valid TaskDto taskDto
+    ) {
+        Task updatedTask = taskService.updateTask(listId,
+                taskId,
+                taskMapper.taskDtoToTask(taskDto));
+        return ResponseEntity.ok(new ApiResponse<>(taskMapper.taskToTaskDto(updatedTask),
+                "Task with ID  "+taskId+" updated successfully"));
 
 
+}
 
 }

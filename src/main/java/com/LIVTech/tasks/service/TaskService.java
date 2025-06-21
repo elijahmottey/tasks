@@ -11,4 +11,5 @@ public interface TaskService {
     List<Task> taskLists(Long taskId);
     Task createTask(Long taskListId,Task task);
     Optional<Task> getTask(Long taskListId, Long taskId);
+    Task updateTask(Long taskListId, Long taskId,Task task);
 }
