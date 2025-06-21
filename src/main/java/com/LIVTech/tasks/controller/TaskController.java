@@ -67,4 +67,10 @@ public class TaskController {
 
 }
 
+ @DeleteMapping("/delete/{taskId}")
+    public void deleteTask(@PathVariable("listId") Long listId, @PathVariable("taskId") Long taskId) {
+        this.taskService.deleteTask(listId,taskId);
+        ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }

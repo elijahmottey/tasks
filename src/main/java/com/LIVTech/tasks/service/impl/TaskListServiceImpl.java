@@ -91,8 +91,10 @@ public class TaskListServiceImpl implements TaskListService {
                 .orElseThrow(() -> new NotFoundException("Task list not found with id: " + id));
     }
 
-    @Override
+
     @Transactional
+    @Override
+
     public TaskList updateTaskList(Long id, TaskList taskList) {
 
         if(!Objects.equals(taskList.getId(),id))
@@ -109,8 +111,11 @@ public class TaskListServiceImpl implements TaskListService {
 
     }
 
-    @Override
+
+
     @Transactional
+    @Override
+
     public void deleteTaskList(Long id) {
         this.taskListRepository.deleteById(id);
 

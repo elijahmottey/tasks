@@ -35,8 +35,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
 
-    @Override
+
     @Transactional
+    @Override
+
     public Task createTask(Long taskListId, Task task) {
         if (null != task.getTaskId()) {
             throw new IllegalArgumentException("Task ID must be null for a new task");
@@ -67,7 +69,10 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new NotFoundException("Task not found with ID: " + taskId)));
     }
 
+
+    @Transactional
     @Override
+
     public Task updateTask(Long taskListId, Long taskId, Task task) {
         if(null == task.getTaskId())
             throw new IllegalArgumentException("Task ID must be null for a new task");
@@ -92,5 +97,11 @@ public class TaskServiceImpl implements TaskService {
 
 
 
+    }
+
+    @Transactional
+    @Override
+    public void deleteTask(Long taskListId, Long taskId) {
+        this.taskRepository.deleteByTaskListIdAndTaskId(taskListId,taskId);
     }
 }
