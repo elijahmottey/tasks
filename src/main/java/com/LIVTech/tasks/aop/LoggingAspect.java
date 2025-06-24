@@ -15,7 +15,7 @@ import java.util.Arrays;
  * This aspect provides detailed logs for method entry, exit, execution time,
  * and exceptions, which is invaluable for debugging and monitoring application behavior.
  *
- * @author Gemini Code Assist
+ * @author Elijah
  */
 @Aspect
 @Component

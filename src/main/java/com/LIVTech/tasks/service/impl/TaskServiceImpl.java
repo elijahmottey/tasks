@@ -1,16 +1,20 @@
 package com.LIVTech.tasks.service.impl;
 
 import com.LIVTech.tasks.domain.entities.Task;
-
 import com.LIVTech.tasks.domain.entities.TaskList;
 import com.LIVTech.tasks.domain.enums.TaskPriority;
 import com.LIVTech.tasks.domain.enums.TaskStatus;
 import com.LIVTech.tasks.exception.NotFoundException;
 import com.LIVTech.tasks.repository.TaskListRepository;
 import com.LIVTech.tasks.repository.TaskRepository;
+import com.LIVTech.tasks.repository.specification.TaskSpecification;
 import com.LIVTech.tasks.service.TaskService;
 import jakarta.transaction.Transactional;
+// FIX: The incorrect 'org.hibernate.query.Page' import has been removed.
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page; // This is the correct Page interface to use.
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,6 +33,24 @@ public class TaskServiceImpl implements TaskService {
         this.taskListRepository = taskListRepository;
     }
 
+
+    /**
+     * This method is now correct. The method signature uses the proper
+     * org.springframework.data.domain.Page, which matches the return type
+     * of the repository's findAll method. The logic inside was already correct.
+     */
+    @Override
+    public Page<Task> searchTasks(Long taskListId, String keyword, TaskStatus status, TaskPriority priority, Pageable pageable) {
+        // Combine specifications dynamically
+        Specification<Task> spec = Specification.anyOf(TaskSpecification.belongsToTaskList(taskListId))
+                .and(TaskSpecification.hasKeyword(keyword))
+                .and(TaskSpecification.hasStatus(status))
+                .and(TaskSpecification.hasPriority(priority));
+
+        return taskRepository.findAll(spec, pageable);
+    }
+
+
     @Override
     public List<Task> taskLists(Long taskId) {
         return this.taskRepository.findByTaskListId(taskId);
@@ -38,7 +60,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-
     public Task createTask(Long taskListId, Task task) {
         if (null != task.getTaskId()) {
             throw new IllegalArgumentException("Task ID must be null for a new task");
@@ -72,7 +93,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-
     public Task updateTask(Long taskListId, Long taskId, Task task) {
         if(null == task.getTaskId())
             throw new IllegalArgumentException("Task ID must be null for a new task");
@@ -93,10 +113,6 @@ public class TaskServiceImpl implements TaskService {
         existingTask.get().setUpdated(LocalDateTime.now());
 
         return this.taskRepository.save(existingTask.get());
-
-
-
-
     }
 
     @Transactional
