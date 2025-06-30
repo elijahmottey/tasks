@@ -35,6 +35,10 @@ public class TaskList {
     @OneToMany(mappedBy = "taskList" ,cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Task> tasks;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "userId")
+//    private User user;
+
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
 
