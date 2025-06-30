@@ -27,6 +27,11 @@ spring:
           lob.non_contextual_creation: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+
+
 server:
   port: 9099
+
+frontend:
+  url: http://localhost:3000
 
