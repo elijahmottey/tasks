@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 
 import java.util.List;
 
@@ -15,8 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table (name = "task_user")
-public class User {
+@Table (name = "users")
+public class User   {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long userId;

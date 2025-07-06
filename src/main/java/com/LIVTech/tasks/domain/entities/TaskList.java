@@ -46,9 +46,14 @@ public class TaskList {
     private LocalDateTime updated;
 
 
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "TaskList{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", created=" + created +
+                ", updated=" + updated +
+                '}';
+    }
 }

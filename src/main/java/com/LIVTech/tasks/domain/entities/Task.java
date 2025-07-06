@@ -54,5 +54,17 @@ public class Task  {
     private LocalDateTime updated;
 
 
-
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + taskId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", dueDate=" + dueDate +
+                ", status=" + status +
+                ", priority=" + priority +
+                ", created=" + created +
+                ", updated=" + updated +
+                '}';
+    }
 }
